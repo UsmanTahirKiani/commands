@@ -1,0 +1,8 @@
+docker commit el_791 container_name_el
+docker commit kb_791 container_name_kb
+docker run --name el_793 -d -p 9200:9200 -p 9300:9300 container_name_el
+docker run --name kb_793 --link el_793:elasticsearch -p 5601:5601 container_name_kb
+docker commit el_793 dockerhub_username/container_name_el
+docker commit kb_793 dockerhub_username/container_name_kb
+docker push dockerhub_username/container_name_el
+docker push dockerhub_username/container_name_kb
