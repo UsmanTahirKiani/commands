@@ -1,0 +1,9 @@
+ibmcloud target
+ibmcloud cr namespaces
+ibmcloud login
+ibmcloud cr region-set us-south
+ibmcloud cr login
+export MY_NAMESPACE=sn-labs-u191645
+docker tag myimage:v1 us.icr.io/$MY_NAMESPACE/hello-world:1
+ibmcloud cr images
+ibmcloud login --apikey $IBMCLOUD_API_KEY

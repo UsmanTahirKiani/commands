@@ -1,0 +1,80 @@
+docker pull dpage/pgadmin4
+docker run --name pgadmin -p 5051:80 -e "PGADMIN_DEFAULT_EMAIL=usman@gmail.com" -e "PGADMIN_DEFAULT_PASSWORD=12345678" -d  dpage/pgadmin4
+docker pull mdillon/postgis
+docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=12345678 -d mdillon/postgis
+
+docker run --name el_791 -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.9.1
+docker run --name kibana_791 --link el_791:elasticsearch -p 5601:5601 docker.elastic.co/kibana/kibana:7.9.1
+docker run --name kb_793 --link el_791:elasticsearch -p 5602:5601 kb_793 
+
+netstat -an |find /i "listening"
+docker pull portainer
+docker container ls -a  //list all containers
+docker container rm 19b83f36ce72 //remove container note: id from list
+docker stop my_container  
+docker run --rm -it -v ~/pipeline/:D:\Docker logstash:7.9.2
+docker run --rm -it -v ~/pipeline/:Users/Usman Tahir/pipeline/ docker.elastic.co/logstash/logstash:7.9.2 -f logstash_fbr.conf
+docker run -p 80:80 -p 3515:3515/udp -v /c/Users/"Usman Tahir"/Documents/logstash:/etc/logstash logstash:7.9.2
+
+docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk  sebp/elk
+.\filebeat.exe setup Start-Service filebeat
+
+/usr/opt/logstash/bin/logstash -f logstash_fbr.conf
+
+FROM logstash:7.2.1 COPY file.csv ./
+docker commit edec3ac6a598 usmantahirkiani/postgis
+docker push usmantahirkiani/postgis
+
+docker inspect -f "{{.Config.Env}}" postgrest/postgrest
+
+docker run --rm -p 3000:3000 -e PGRST_DB_SCHEMA="public" -e PGRST_DB_URI="postgres://postgres:12345678@172.17.0.3:5432/postgres" -e PGRST_DB_ANON_ROLE="postgres" postgrest/postgrest
+
+
+docker run --rm -p 3000:3000 
+	-e PGRST_DB_SCHEMA="public" 
+	-e PGRST_DB_URI="postgres://dwquqyoygworba:7b12f7c4807407c02c53682ff24dfeda4a68cb3bc78dd13375c13380949e765f@ec2-54-225-254-115.compute-1.amazonaws.com:5432/d8l2qa61evm6dk"
+ 	-e PGRST_DB_ANON_ROLE="dwquqyoygworba"
+	postgrest/postgrest
+
+2K*SCXj^y2%M1laHheny
+
+
+docker run --name geoserver -d -P kartoza/geoserver
+
+
+docker run -d -p 8600:8080 --name geoservere kartoza/geoserver:2.18.0
+
+docker run -it --name geoserver  -p 8600:8080 kartoza/geoserver
+
+docker run  --name=geoserver_8085 -p 8085:8080 -d -v $HOME/geoserver_data:/opt/geoserver/data_dir -e "GEOSERVER_LOG_LOCATION=/opt/geoserver/data_dir/logs/geoserver_8085.log" -t thinkwhere/geoserver
+
+
+docker commit kb_791 abdullahhashmi/covidkb_792
+docker run --name el_793 -d -p 9200:9200 -p 9300:9300 abdullahhashmi/covidel_792
+docker run --name kb_793 --link el_793 -p 5601:5601 abdullahhashmi/covidkb_792
+docker commit el_793 abdullahhashmi/covid_el
+docker push abdullahhashmi/covid_el
+docker commit kb_793 abdullahhashmi/covid_kb
+docker push abdullahhashmi/covid_kb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
