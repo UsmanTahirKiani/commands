@@ -57,7 +57,8 @@ docker push abdullahhashmi/covid_el
 docker commit kb_793 abdullahhashmi/covid_kb
 docker push abdullahhashmi/covid_kb
 
-
+docker run --name el_791 -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" usmantahirkiani/el_792
+docker run --name kibana_791 --link el_791:elasticsearch -p 5601:5601 usmantahirkiani/kb_792
 
 
 
