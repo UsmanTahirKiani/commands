@@ -61,6 +61,12 @@ docker run --name el_791 -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-
 docker run --name kibana_791 --link el_791:elasticsearch -p 5601:5601 usmantahirkiani/kb_792
 
 
+cout db rows
+SELECT reltuples::bigint AS estimate
+FROM   pg_class
+WHERE  oid = 'public.tweets'::regclass;
+
+
 
 
 
