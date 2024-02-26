@@ -1,1 +1,79 @@
+pip install gunicorn flask
+
+
+nano ~/app/wsgi.py
+
+
+from app import app
+
+if __name__ == "__main__":
+    app.run()
+
+
+cd ~/app
+gunicorn --bind 0.0.0.0:5000 wsgi:app
+
+
+deactivate
+
+
+sudo nano /etc/systemd/system/app.service
+
+
+[Unit]
+Description=Gunicorn instance to serve app
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/home/ubuntu/app
+Environment="PATH=/home/ubuntu/app/env/bin"
+ExecStart=/home/ubuntu/app/env/bin/gunicorn --workers 3 --bind unix:myproject.sock -m 007 wsgi:app
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+sudo nano /etc/nginx/sites-available/app
+
+
+
+server {
+    listen 80;
+    server_name 18.197.68.215;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/app/app.sock;
+    }
+}
+
+
+sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled
+
+sudo nginx -t
+
+
+sudo chmod 755 /home/ubuntu
+
+
+
+sudo apt install python3-certbot-nginx
+
+
+sudo certbot --nginx -d 18.197.68.215
+
+
+sudo certbot --nginx -d your_domain -d www.your_domain
+
+
+sudo ufw delete allow 'Nginx HTTP'
+
+https://your_domain
+
 
