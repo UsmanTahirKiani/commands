@@ -1,0 +1,85 @@
+sudo apt update
+sudo apt install nginx
+
+env
+
+pip install django gunicorn 
+
+gunicorn --bind 0.0.0.0:8000 media_operations.wsgi
+
+sudo nano /etc/systemd/system/gunicorn.socket
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+
+
+sudo nano /etc/systemd/system/gunicorn.service
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/root/app/markee
+ExecStart=/root/app/markee/env/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          media_operations.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+
+sudo systemctl start gunicorn.socket
+sudo systemctl enable gunicorn.socket
+
+
+file /run/gunicorn.sock
+
+sudo systemctl status gunicorn
+
+sudo nano /etc/nginx/sites-available/media_operations
+
+server {
+    listen 80;
+    server_name 64.23.203.202;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /root/app/markee;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}
+
+sudo ln -s /etc/nginx/sites-available/media_operations /etc/nginx/sites-enabled
+
+sudo nginx -t
+
+
+sudo chmod 755 /root
+
+sudo apt install python3-certbot-nginx
+
+
+sudo certbot --nginx -d 18.197.68.215
+
+
+sudo certbot --nginx -d your_domain -d www.your_domain
+
+
+sudo ufw delete allow 'Nginx HTTP'
+
+https://your_domain
+
