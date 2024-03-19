@@ -83,3 +83,9 @@ sudo ufw delete allow 'Nginx HTTP'
 
 https://your_domain
 
+
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn
+
+
+
